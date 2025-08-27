@@ -1,0 +1,36 @@
+name: Build Flutter Windows App
+
+on:
+  push:
+    branches:
+      - material     # 推送到 material 分支时触发
+  workflow_dispatch: # 允许在 Actions 页面手动触发
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.3'   # 你本地的 flutter --version 看一下，填同样的
+          channel: 'stable'
+
+      - name: Enable Windows
+        run: flutter config --enable-windows-desktop
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Build Windows release
+        run: flutter build windows --release
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-release
+          path: build/windows/runner/Release/**
