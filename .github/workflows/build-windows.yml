@@ -17,7 +17,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.3'   # 你本地的 flutter --version 看一下，填同样的
+          flutter-version: '2.10.5'   # 你本地的 flutter --version 看一下，填同样的
           channel: 'stable'
 
       - name: Enable Windows
