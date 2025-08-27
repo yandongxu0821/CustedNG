@@ -59,19 +59,19 @@
 ✔️ 一键评教  
 ✔️ 四六级照片  
 ✔️ 考试题库  
-✔️ 实时天气  
+✔️ ~~实时天气 （后端待完善）~~  
 ✔️ 校历  
 ✔️ ...  
 
 ## 安装
 Android|iOS|桌面客户端
 :--:|:--:|:--:
-[直链](https://cust.app/app/apk/downloadUrl)|[AppStore](https://apps.apple.com/cn/app/custed/id1483085363) |需自行下载编译
+[直链](https://cdn.sharinghub.cn/softwares/arm64-v8a/CustedNG_756_arm64-v8a.apk)|[~~AppStore~~ 目前停止更新](https://custed.sharinghub.cn/ios_no_update.html) |需自行下载编译
 
 
 
 ## 源码使用
-1. **使用git[^1]获取项目**。打开终端，切换到你喜欢的目录，执行`git clone https://github.com/CustedNG/CustedNG`
+1. **使用git[^1]获取项目**。打开终端，切换到你喜欢的目录，执行`git clone https://github.com/yandongxu0821/CustedNG`
 2. **配置flutter环境**。请参考[flutter.cn](https://flutter.cn/docs/get-started/install)上的教程。
 3. **运行项目**。切换目录至本项目，执行`./make.dart run`。
 4. **修改本项目**。do whatever you want。
@@ -85,7 +85,8 @@ Android|iOS|桌面客户端
 ## 已知问题
 - [ ] 需使用Flutter2编译Android版本（[追溯](https://github.com/CustedNG/CustedNG/commit/56ca1e31bec3eeb013fe576c9d4fb67f0b500694)）
 - [ ] 当前仅支持本科生使用
-- [x] <del>由于教务尚未开放相关功能 无法查询成绩</del>
+- [ ] 新的后台尚未搭建完成，因此资源导航页暂时不可用
+- [x] ~~由于教务尚未开放相关功能 无法查询成绩~~
 
 
 ## Licence
