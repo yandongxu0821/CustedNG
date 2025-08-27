@@ -43,7 +43,6 @@ lib/generated_plugin_registrant.dart
 
 /release
 countly_config
-lib/config/countly.dart
 ios/build
 .vscode
 models.jsonc
