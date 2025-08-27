@@ -50,3 +50,6 @@ models.jsonc
 .custed
 .fvm/flutter_sdk
 .fvm
+
+# Keystore files
+android/app/yandongxu0821.jks

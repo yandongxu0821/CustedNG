@@ -183,7 +183,7 @@ class _UseTabState extends State<UserTab> with AutomaticKeepAliveClientMixin {
       setting.pushNotification.put(false);
       return showSnackBar(context, '请先登录');
     }
-    if (!(await custed.remoteHaveSchedule(id))) {
+    if (!(await custed.remoteHaveSchedule(id))) { // TODO: 继续对应服务端实现
       setting.pushNotification.put(false);
       return showSnackBar(context, '未能检测到课表！\n请登录并刷新课表后重试');
     }

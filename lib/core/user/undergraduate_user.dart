@@ -286,8 +286,8 @@ class UndergraduateUser with CustUser implements User {
   }
 
   static DateTime getScheduleStartTime() {
-    // TODO: Update this :)
-    return locator<AppProvider>().config.semesterStart ?? DateTime(2023, 2, 27);
+    // TODO: Update this :), previous update at 2025-08-26
+    return locator<AppProvider>().config.semesterStart ?? DateTime(2025, 8, 25);
   }
 }
 

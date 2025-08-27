@@ -37,10 +37,12 @@ Future<bool> isFileAvailable(String url) async {
 Future<void> _update(BuildContext context, String url, int version) async {
   if (Platform.isAndroid) {
     await RUpgrade.upgrade(url,
-        fileName: 'CustedNG_${version}_Arm64.apk', isAutoRequestInstall: true);
-  } else if (Platform.isIOS) {
-    await RUpgrade.upgradeFromAppStore('1483085363');
-  } else {
+        fileName: 'CustedNG_${version}_arm64-v8a.apk',
+        isAutoRequestInstall: true);
+  } // else if (Platform.isIOS) {
+  // await RUpgrade.upgradeFromAppStore('1483085363');
+  // }
+  else {
     showRoundDialog(context, '注意', Text('当前平台不支持应用内升级'), [
       TextButton(onPressed: () => Navigator.of(context).pop(), child: Text('好'))
     ]);
@@ -54,10 +56,11 @@ Future<void> _doUpdate(
 }) async {
   if (update == null) return;
 
-  final versions = update.version;
+  final versions = update.version; // 两个版本号的字典
   final urls = update.url;
   final priorities = update.priority;
-  final version = Platform.isAndroid ? versions.android : versions.ios;
+  final version = Platform.isAndroid ? versions.android : versions.ios; // 版本号
+  final version2 = version - 756; // 可读版本号
   final url = Platform.isAndroid ? urls.android : urls.ios;
   final priority = Platform.isAndroid ? priorities.android : priorities.ios;
   final changelog =
@@ -89,7 +92,7 @@ Future<void> _doUpdate(
 
     showRoundDialog(
       context,
-      'v1.0.${version}',
+      'v2.0.${version2}',
       Text(changelog),
       [
         TextButton(

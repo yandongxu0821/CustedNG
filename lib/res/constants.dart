@@ -16,7 +16,9 @@ const tikuUrl = 'https://tiku-ng.lacus.site';
 const custedServiceAgreementUrl =
     'https://blog.tusi.site/serviceagreement.html';
 const joinQQUserGroup = 'https://jq.qq.com/?_wv=1027&k=TLrWZjtp';
-const backendUrl = 'https://api.backend.cust.team';
+const backendUrl = 'https://custed.sharinghub.cn';
 const jwLoginPageEvalScript =
     "document.body.innerHTML='<p>正在登录，请等待自动返回</p><br><p>如果等待时间过长(10s)，请返回重试。</p>';";
 const commonIssueUrl = 'https://lolli.tech/cmw';
+
+// TODO: Sites need UPDATE caused by sites closed

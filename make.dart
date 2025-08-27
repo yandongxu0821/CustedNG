@@ -1,4 +1,4 @@
-#!/usr/bin/env fvm dart
+#!/usr/bin/env dart
 // ignore_for_file: avoid_print
 
 /// 使用示例
@@ -25,13 +25,25 @@ final buildFuncs = {
   'android': flutterBuildAndroid,
 };
 
-Future<void> getGitCommitCount() async {
-  final result = await Process.run('git', ['log', '--oneline']);
-  build = (result.stdout as String)
-      .split('\n')
-      .where((line) => line.isNotEmpty)
-      .length;
-}
+String buildName;
+String buildNumber;
+
+// Future<void> getBuildVersion() async {
+//   // final result = await Process.run('git', ['log', '--oneline']);
+//   // build = (result.stdout as String)
+//   //     .split('\n')
+//   //     .where((line) => line.isNotEmpty)
+//   //     .length;
+
+//   // 版本号逻辑更改，从绑定 git 到手动指定
+//   if (buildName == null || buildNumber == null) {
+//     print('Error: version not specified. Usage: ./make.dart build <platform> <versionName+versionCode>');
+//     exit(1);
+//   }
+
+//   print('Using manual version: $buildName+$buildNumber');
+//   build = int.parse(buildNumber) - 756; // 减去初始版本号 756
+// }
 
 Future<void> writeStaticConfigFile(
     Map<String, dynamic> data, String className, String path) async {
@@ -81,7 +93,7 @@ Future<void> updateBuildData() async {
 }
 
 Future<void> dartFormat() async {
-  final result = await Process.run('fvm', ['dart', 'format', '.']);
+  final result = await Process.run('dart', ['format', '.']);
   print('\n' + result.stdout);
   if (result.exitCode != 0) {
     print(result.stderr);
@@ -90,23 +102,22 @@ Future<void> dartFormat() async {
 }
 
 void flutterRun(String mode) {
-  Process.start('fvm', ['flutter', 'run', mode == null ? '' : '--$mode'],
+  Process.start('flutter', ['run', mode == null ? '' : '--$mode'],
       mode: ProcessStartMode.inheritStdio, runInShell: true);
 }
 
 Future<void> flutterBuild(String source, String target, bool isAndroid) async {
   final args = [
-    'flutter',
     'build',
     isAndroid ? 'apk' : 'ipa',
     '--target-platform=android-arm64',
-    '--build-number=$build',
-    '--build-name=1.0.$build',
+    '--build-number=$buildNumber',
+    '--build-name=$buildName',
     '--bundle-sksl-path=${isAndroid ? 'android' : 'ios'}$skslFileSuffix',
   ];
   if (!isAndroid) args.removeAt(3);
   print('Building with args: ${args.join(' ')}');
-  final buildResult = await Process.run('fvm', args, runInShell: true);
+  final buildResult = await Process.run('flutter', args, runInShell: true);
   final exitCode = buildResult.exitCode;
 
   if (exitCode == 0) {
@@ -138,7 +149,7 @@ Future<void> flutterBuildIOS() async {
 
 Future<void> flutterBuildAndroid() async {
   await flutterBuild('./build/app/outputs/flutter-apk/app-release.apk',
-      './release/${appName}_build_Arm64.apk', true);
+      './release/${appName}_${buildNumber}_arm64-v8a.apk', true);
   await killJava();
 }
 
@@ -147,7 +158,7 @@ Future<void> changeAppleVersion() async {
     final file = File('$path/$appleXCConfigPath');
     final contents = await file.readAsString();
     final newContents = contents
-        .replaceAll(regAppleMarketVer, 'MARKETING_VERSION = 1.0.$build;')
+        .replaceAll(regAppleMarketVer, 'MARKETING_VERSION = 2.0.$build;')
         .replaceAll(regAppleProjectVer, 'CURRENT_PROJECT_VERSION = $build;');
     await file.writeAsString(newContents);
   }
@@ -167,8 +178,8 @@ Future<void> killJava() async {
 
 void main(List<String> args) async {
   if (args.isEmpty) {
-    print('No action. Exit.');
-    return;
+    print('Usage: ./make.dart <command> [options]');
+    exit(1);
   }
 
   final command = args[0];
@@ -176,12 +187,23 @@ void main(List<String> args) async {
   switch (command) {
     case 'run':
       return flutterRun(args.length == 2 ? args[1] : null);
+
     case 'build':
-      await getGitCommitCount();
+      if (args.length < 4) {
+        print(
+            'Usage: ./make.dart build <platform> <versionName> <versionCode>');
+        exit(1);
+      }
+
+      buildName = args[2];
+      buildNumber = args[3];
+      build = int.tryParse(buildNumber);
+
+      // await getBuildVersion();
       await dartFormat();
       await updateBuildData();
 
-      final stopwatch = Stopwatch()..start();
+      final stopwatch = Stopwatch()..start(); // 时间统计
       if (args.length > 1) {
         final platform = args[1];
         if (buildFuncs.containsKey(platform)) {
@@ -192,14 +214,16 @@ void main(List<String> args) async {
         }
       } else {
         for (final func in buildFuncs.values) {
-          await func();
+          await func(); // 未指定平台参数则依次执行编译
         }
       }
 
       print('Build finished in ${stopwatch.elapsed}');
       return;
+
     case 'update-build':
       return updateBuildData();
+
     default:
       print('Unsupported command: $command');
       return;

@@ -96,7 +96,7 @@ class _CustedHeaderState extends State<CustedHeader> {
                 ),
                 SizedBox(height: 10.0),
                 Text(
-                  'Ver: Material 1.0.${BuildData.build}',
+                  'Ver: ${BuildData.build} @ 2.0.${BuildData.build - 756}',
                   style: TextStyle(
                       color:
                           floatTextUseWhite ? Colors.white54 : Colors.black54,

@@ -24,7 +24,7 @@ import 'package:http/http.dart';
 class JwService extends WrdvpnBasedService {
   // String _baseUrl;
   String get baseUrl {
-    /// 每次都重新获取，以免内存内的失效
+    // // 每次都重新获取，以免内存内的失效
     // if (_baseUrl != null) return _baseUrl;
     final user = locator<UserDataStore>();
     return user.lastLoginServer.fetch() ??
