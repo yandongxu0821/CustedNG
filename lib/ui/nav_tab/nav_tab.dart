@@ -12,8 +12,10 @@ import 'package:custed2/ui/widgets/select_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-const custcc = 'https://cust.cc/?custed=1';
-const custccDark = 'https://cust.cc/?custed=1&dark=1';
+// const custcc = 'https://cust.cc/?custed=1';
+// const custccDark = 'https://cust.cc/?custed=1&dark=1';
+const custcc = 'https://portal.cust.edu.cn/custp/index';
+const custccDark = 'https://portal.cust.edu.cn/custp/index';
 
 class NavTab extends StatefulWidget {
   @override
@@ -50,7 +52,10 @@ class _NavTabState extends State<NavTab> with AutomaticKeepAliveClientMixin {
           onTap: toggleSideMenu,
           child: Icon(Icons.toggle_off),
         ),
-        middle: NavbarMiddle(textAbove: '资源导航', textBelow: 'cust.cc'),
+        middle: NavbarMiddle(
+          textAbove: '校园门户',
+          textBelow: 'portal.cust.edu.cn'
+        ),
         trailing: [_showMenu(context)],
       ),
       body: FutureBuilder(

@@ -2,8 +2,8 @@
 
 class BuildData {
   static const String name = "CustedNG";
-  static const int build = 756;
+  static const int build = 757;
   static const String engine = "2.10.5";
-  static const String buildAt = "2025-08-27 16:01:22.261356";
-  static const int modifications = 14;
+  static const String buildAt = "2025-09-03 20:06:45.356384";
+  static const int modifications = 3;
 }
